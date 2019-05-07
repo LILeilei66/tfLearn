@@ -1,43 +1,29 @@
-"""
-tf.keras.layers.Dense:
-======================
-    The layer has never been called and thus has no defined output || input shape.
-    While calling this object, the arguments should of dimension of two, with the shape[0] the
-    instance size, and shape[1] the feature size.
-
-difference between tf.layers and tf.keras.layers:
-==================================================
-    tf.layers is the wrappers of tf.keras.layers, e.g.:
-        @tf_export('layers.Dense')
-        class Dense(keras_layers.Dense, base.Layer):
-
-why len(tf.layers.Dense.weight) is 2?
-=====================================
-    <class 'list'>:
-    [<tf.Variable 'dense/kernel:0' shape=(10, 100) dtype=float32, numpy=array(), dtype=float32)>,
-    <tf.Variable 'dense/bias:0' shape=(100,) dtype=float32, numpy=array(), dtype=float32)>]
-    答: 在 tf, weight 不叫 weight, 叫 kernel.
-"""
-
 import tensorflow as tf
+import pandas as pd
+import tensorflow.feature_column as fc
+import os
+import sys
+import matplotlib.pyplot as plt
+import census_dataset
+
 tf.enable_eager_execution()
 
-# <editor-fold desc="利用 input 确定input shape of layer">
-layer = tf.keras.layers.Dense(100, input_shape=[None, 10]) # first argument
+# <editor-fold desc="dataset creation">
+TRAIN_FILE = 'adult.data'
+TEST_FILE = 'adult.test'
+
+train_df = pd.read_csv(TRAIN_FILE, header=None, names=census_dataset._CSV_COLUMNS)
+test_df = pd.read_csv(TEST_FILE, header=None, names=census_dataset._CSV_COLUMNS)
+# print(train_df.head())
+# print(test_df.head())
+# print(test_df.shape)
+
+def easy_input_function(df, label_key, num_epochs, shuffle, batch_size):
+    label = df[label_key]
+    ds = tf.data.Dataset.from_tensor_slices((dict(df), label))
 
 
-# signifies the output
-# channel.
-
-inputs = tf.random_normal(shape=[1,10], mean=0.0)
-outputs = layer(inputs)
-
-
-result = inputs.numpy() * layer.kernel.numpy() + layer.bias.numpy()
-print(result - outputs)
-print(type(layer.bias))
-# print(outputs)
-print((layer.weights[0].shape))
-inputs2 = tf.random_normal(shape=[100,10],mean=0.0)
-outputs2 = layer(inputs2)
 # </editor-fold>
+
+
+
