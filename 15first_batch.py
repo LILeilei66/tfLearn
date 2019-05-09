@@ -5,6 +5,7 @@
 """
 
 import tensorflow as tf
+import tensorflow.contrib.eager as tfe
 import pandas as pd
 tf.enable_eager_execution()
 
@@ -26,3 +27,7 @@ print(batch1)
 # method2: iterations
 batch2 = next(iter(ds))
 print(batch2)
+
+# method3: tfe.Iterator(dataset)
+for element in tfe.Iterator(ds):
+    print(element)

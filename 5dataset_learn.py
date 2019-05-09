@@ -1,10 +1,21 @@
 """
+tf.data.TextLineDataset 的相关 transformation 使用顺序:
+    注意: 先 shuffle 再 map, 先 repeat 再 batch.
+    ds = tf.data.TextLineDataset(file)
+    ds = ds.shuffle(buffer_size)
+    ds = ds.map(map_func)
+    ds = ds.repeat(num_epoch).batch(batch_size)
+
+
+tfe contains eager_execution and graph_execution which are efficient for image processing.
 Dataset.from_tensors
 Dataset.from_tensor_slices
 tf.data.Dataset
 """
 
 import tensorflow as tf
+import tensorflow.contrib.eager as tfe
+import numpy as np
 import tempfile
 tf.enable_eager_execution()
 
@@ -45,3 +56,17 @@ tf.Tensor(b'    Line2', shape=(), dtype=string)
 """
 # </editor-fold>
 
+# dataset with dictionary
+dataset = tf.data.Dataset.from_tensor_slices(
+    {
+        "img": np.array([1,2,3,4,5]),
+        "label": np.random.uniform(siz=(5,2))
+        }
+    )
+for one_element in tfe.Iterator(dataset):
+    print(one_element)
+
+# dataset with tuple
+dataset = tf.data.Dataset.from_tensor_slices(
+    (np.array([1,2,3,4,5]), np.random.uniform(siz=(5,2)))
+    )
