@@ -88,7 +88,6 @@ model = keras.Sequential([
     keras.layers.Dense(128, activation=tf.nn.relu), # output shape = 128
     keras.layers.Dense(10, activation=tf.nn.softmax) # output shape = 10
     ])
-keras.layers.MaxPool2D
 model.compile(optimizer=tf.train.AdamOptimizer(), loss='sparse_categorical_crossentropy', metrics=[
     'accuracy'])
 # </editor-fold>

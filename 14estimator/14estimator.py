@@ -32,7 +32,7 @@ def easy_input_function(df, label_key, num_epochs, shuffle, batch_size):
         ds = ds.shuffle(10000)
 
     ds = ds.batch(batch_size).repeat(num_epochs)
-
+    return ds
 # </editor-fold>
 
 def parse_csv(value):
@@ -54,3 +54,11 @@ def input_fn(file_names, num_epoch, shuffle, batch_size):
 train_inpf = functools.partial(input_fn, TRAIN_FILE, num_epochs=2, shuffle=True, batch_size=64)
 test_inpf = functools.partial(input_fn, TEST_FILE, num_epochs=1, shuffle=True, batch_size=64)
 
+"""
+特征列可以是原始特征 dict 中的其中一个输入, 也可以是对一个或多个基准列进行转换而创建的新列.
+"""
+
+age = fc.numeric_column('age')
+
+feature_batch,label_batch = ds.
+fc.input_layer(feat)
