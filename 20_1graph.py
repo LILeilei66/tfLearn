@@ -2,6 +2,7 @@
 ref: https://blog.csdn.net/xierhacker/article/details/53860379
 """
 import tensorflow as tf
+from tensorflow.python.client import device_lib
 import numpy as np
 
 # <editor-fold desc="1. 默认图">
@@ -47,7 +48,7 @@ print(tf.get_default_graph().get_all_collection_keys())
 print(tf.get_default_graph())
 # </editor-fold>
 
-
-
-
-print('end')
+# <editor-fold desc="4. check device">
+print('==check device=====')
+print(device_lib.list_local_devices())
+# </editor-fold>
