@@ -15,6 +15,7 @@ y = tf.matmul(w, x)
 print(y) # Tensor("MatMul:0", shape=(2, 2), dtype=float32)
 
 init_op = tf.global_variables_initializer() # todo: what's this
+# 根据stackoverflow: 所有的变量都必须先 explicitly initialized, 通过 initializer.
 
 with tf.Session() as session:
     session.run(init_op)
