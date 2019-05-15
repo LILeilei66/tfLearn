@@ -88,3 +88,23 @@ with tf.Session() as session:
 
 del input1, input2, output, result
 # </editor-fold>
+
+# <editor-fold desc="5. 获取 Variable 的值">
+print('5.')
+a = tf.Variable(initial_value=2.0)
+with tf.Session() as sess:
+    sess.run(tf.global_variables_initializer())
+    print(a.eval()) # 2.0
+del a
+# </editor-fold>
+
+# <editor-fold desc="6. 循环获取 Variable 的值">
+a = tf.Variable(initial_value=10)
+with tf.Session() as sess:
+    sess.run(tf.global_variables_initializer())
+    for i in range(2):
+        a -= 1
+        print(a.eval())
+"""9
+8"""
+# </editor-fold>
